@@ -8,14 +8,50 @@ import static uqtran.State.*;
  */
 
 public class Forest {
-    Vertex[][] forestGrid;
-    ArrayList<Vertex> burningArea;
-    final int fireSpreadRate;
-    int fireSpreadCounter;
+    private Vertex[][] forestGrid;
+    private ArrayList<Vertex> burningArea;
+    private final int fireSpreadRate;
+    private int fireSpreadCounter;
 
     Forest( int sizeX, int sizeY, int fireSpreadRate ) {
         forestGrid = new Vertex[sizeX][sizeY];
         this.fireSpreadRate = fireSpreadRate;
+        burningArea = new ArrayList<>();
+        init();
+    }
+
+    private void init() {
+        for(int i = 0; i < forestGrid.length; i++) {
+            for(int j = 0; j < forestGrid[i].length; j++) {
+                forestGrid[i][j] = new Vertex(i, j, STANDING);
+
+            }
+        }
+        for(int i = 0; i < forestGrid.length; i++) {
+            for(int j = 0; j < forestGrid[i].length; j++) {
+                if(i > 0) {
+                    forestGrid[i][j].getFourNeighbors()[LEFT.getValue()] = forestGrid[i-1][j];
+                }
+                if(i < forestGrid.length-1) {
+                    forestGrid[i][j].getFourNeighbors()[RIGHT.getValue()] = forestGrid[i+1][j];
+                }
+                if(j > 0) {
+                    forestGrid[i][j].getFourNeighbors()[UP.getValue()] = forestGrid[i][j-1];
+                }
+                if(j < forestGrid[i].length-1) {
+                    forestGrid[i][j].getFourNeighbors()[DOWN.getValue()] = forestGrid[i][j+1];
+                }
+            }
+        }
+    }
+
+    public Vertex getVertex(int x, int y) {
+        return forestGrid[x][y];
+    }
+
+    public void burn(int x, int y) {
+        forestGrid[x][y].burn();
+        burningArea.add(forestGrid[x][y]);
     }
 
     public void sweep() {

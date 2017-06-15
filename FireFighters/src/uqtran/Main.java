@@ -4,7 +4,9 @@ package uqtran;
  * Created by uqton on 11.06.2017.
  */
 public class Main {
-    Forest
+    Forest mainForest;
+    Agent[] mainAgents;
+
     Main() {
         init();
     }
@@ -18,6 +20,14 @@ public class Main {
     }
 
     public void sweep() {
-
+        ForestReader fr = new ForestReader();
+        try {
+            fr.read("test_data/testForest1.txt");
+        } catch (Exception e) {
+            System.out.println("Path does not exist");
+            System.exit(0);
+        }
+        mainForest = fr.getInForest();
+        mainAgents = fr.getAgentArray();
     }
 }

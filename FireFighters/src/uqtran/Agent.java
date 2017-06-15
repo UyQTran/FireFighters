@@ -12,8 +12,9 @@ public class Agent {
     int priority;
     Direction previous;
 
-    Agent( int priority ) {
+    Agent( int priority, Vertex startVertex ) {
         this.priority = priority;
+        this.current = startVertex;
     }
 
     public void move( int direction ) {
