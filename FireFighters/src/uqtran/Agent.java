@@ -3,6 +3,7 @@ package uqtran;
 import uqtran.utils.VertexUtil;
 
 import static uqtran.State.*;
+import static uqtran.Direction.*;
 
 /**
  * Created by uqton on 11.06.2017.
@@ -37,11 +38,17 @@ public class Agent {
         Direction moveTo = null;
         boolean clockwise = priority % 2 == 0;
 
+        if(previous == null) {
+            previous = UP;
+        }
+
         if( clockwise ) {
             moveTo = previous.prev.prev;
         } else {
             moveTo = previous.next.next;
         }
+
+        Vertex[] fourNeighbor = current.getFourNeighbors();
 
         for(int i = 0; i < 4; i++) {
             if( clockwise ) {
@@ -50,17 +57,20 @@ public class Agent {
                 moveTo = moveTo.prev;
             }
 
-            if( current.getFourNeighbors()[ moveTo.getValue() ] != null ) {
-                if( current.getFourNeighbors()[ moveTo.getValue() ].getState() == BURNING ) {
-                    previous = moveTo;
-                    current = current.getFourNeighbors()[ moveTo.getValue() ];
-                    break;
-                } else if( current.getFourNeighbors()[ moveTo.next.next.getValue() ].getState() == BURNING && i == 0 ) {
-                    previous = moveTo.next.next;
-                    current = current.getFourNeighbors()[ moveTo.next.next.getValue() ];
-                    break;
+            if(fourNeighbor[moveTo.getValue()] != null) {
+                if( fourNeighbor[ moveTo.getValue() ] != null ) {
+                    if( fourNeighbor[ moveTo.getValue() ].getState() == BURNING ) {
+                        previous = moveTo;
+                        current = current.getFourNeighbors()[ moveTo.getValue() ];
+                        break;
+                    } else if( fourNeighbor[ moveTo.next.next.getValue() ].getState() == BURNING && i == 0 ) {
+                        previous = moveTo.next.next;
+                        current = current.getFourNeighbors()[ moveTo.next.next.getValue() ];
+                        break;
+                    }
                 }
             }
+
         }
     }
 }

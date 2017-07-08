@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class DirectionHandler {
 
-    public void init() {
+    public static void init() {
         ArrayList<Direction> directionList = new ArrayList<>( Arrays.asList( Direction.values() ) );
         int maxIndex = directionList.size()-1;
 

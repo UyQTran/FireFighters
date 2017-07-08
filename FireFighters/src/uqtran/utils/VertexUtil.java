@@ -30,10 +30,13 @@ public class VertexUtil {
 
     public static int countFourneighborBurningStates(Vertex incomingVertex) {
         int fourNeighborBurnCount = 0;
+        Vertex[] fourNeighbor = incomingVertex.getFourNeighbors();
 
         for(int i = 0; i < 4; i++) {
-            if(incomingVertex.getFourNeighbors()[i].getState() == BURNING) {
-                fourNeighborBurnCount++;
+            if(fourNeighbor[i] != null) {
+                if(fourNeighbor[i].getState() == BURNING) {
+                    fourNeighborBurnCount++;
+                }
             }
         }
         return fourNeighborBurnCount;

@@ -13,7 +13,7 @@ public class Engine {
     }
 
     public void init() {
-        new DirectionHandler().init();
+        DirectionHandler.init();
     }
 
     public void sweep(boolean verbose) {
