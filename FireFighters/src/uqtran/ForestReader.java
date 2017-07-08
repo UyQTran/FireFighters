@@ -39,7 +39,7 @@ public class ForestReader {
 
     public void read(String pathName) {
 
-        agentArray = new Agent[2];
+        agentArray = new Agent[1];
         int agentStartX = 1;
         int agentStartY = 1;
         int sizeX = 5;

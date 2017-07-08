@@ -29,6 +29,10 @@ public class Agent {
     public void sweep(boolean verbose) {
         if(!VertexUtil.isCritical( current )) {
             current.extinguish();
+            if(verbose) {
+                String text = "agent" + priority + " extinguish " + current.getCoordinateText();
+                System.out.println(text);
+            }
         }
         Direction moveTo = null;
         boolean clockwise = priority % 2 == 0;

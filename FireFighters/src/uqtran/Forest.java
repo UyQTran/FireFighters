@@ -58,7 +58,9 @@ public class Forest {
         if( fireSpreadCounter >= fireSpreadRate ){
             spreadFire();
             fireSpreadCounter = 0;
-            System.out.println("<allBurning spreadFire 4-neighbor>");
+            if(verbose) {
+                System.out.println("<allBurning spreadFire 4-neighbor>");
+            }
         } else {
             fireSpreadCounter++;
         }

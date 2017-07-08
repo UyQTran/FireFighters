@@ -18,6 +18,10 @@ public class Vertex {
         fourNeighbors = new Vertex[4];
     }
 
+    public String getCoordinateText() {
+        return x + "," + y;
+    }
+
     public void burn() {
         state = BURNING;
     }
