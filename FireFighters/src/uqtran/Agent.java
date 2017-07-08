@@ -11,6 +11,7 @@ public class Agent {
     Vertex current;
     int priority;
     Direction previous;
+    boolean terminated;
 
     Agent( int priority, Vertex startVertex ) {
         this.priority = priority;
@@ -25,7 +26,7 @@ public class Agent {
         current = nextVertex;
     }
 
-    public void sweep() {
+    public void sweep(boolean verbose) {
         if(!VertexUtil.isCritical( current )) {
             current.extinguish();
         }

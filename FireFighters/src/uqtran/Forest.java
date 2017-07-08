@@ -54,10 +54,11 @@ public class Forest {
         burningArea.add(forestGrid[x][y]);
     }
 
-    public void sweep() {
+    public void sweep(boolean verbose) {
         if( fireSpreadCounter >= fireSpreadRate ){
             spreadFire();
             fireSpreadCounter = 0;
+            System.out.println("<allBurning spreadFire 4-neighbor>");
         } else {
             fireSpreadCounter++;
         }

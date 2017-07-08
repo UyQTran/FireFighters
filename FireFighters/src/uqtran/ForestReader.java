@@ -10,7 +10,7 @@ public class ForestReader {
     private Forest inForest;
     private Agent[] agentArray;
 
-    public void read(String pathName) throws Exception {
+    /*public void read(String pathName) throws Exception {
         Scanner scanner = new Scanner(new File(pathName));
 
         agentArray = new Agent[scanner.nextInt()];
@@ -23,7 +23,35 @@ public class ForestReader {
         inForest = new Forest(sizeX, sizeY, fireSpreadRate);
         for(int i = 0; i < sizeY; i++) {
             for(int j = 0; j < sizeX; j++) {
-                if(scanner.nextInt() == 1) {
+                int stateNumber = scanner.nextInt();
+                if(stateNumber == 1) {
+                    inForest.burn(j, i);
+                }
+                System.out.println(stateNumber);
+            }
+        }
+
+        Vertex startVertex = inForest.getVertex(agentStartX, agentStartY);
+        for(int i = 0; i < agentArray.length; i++) {
+            agentArray[i] = new Agent(i, startVertex);
+        }
+    }*/
+
+    public void read(String pathName) {
+
+        agentArray = new Agent[2];
+        int agentStartX = 1;
+        int agentStartY = 1;
+        int sizeX = 5;
+        int sizeY = 5;
+        int fireSpreadRate = 10;
+
+        inForest = new Forest(sizeX, sizeY, fireSpreadRate);
+        int[][] testForest = {{0,0,0,0,0}, {0,1,1,1,0}, {0,1,1,0,0}, {0,1,1,0,0}, {0,0,0,0,0}};
+        for(int i = 0; i < sizeY; i++) {
+            for(int j = 0; j < sizeX; j++) {
+                int stateNumber = testForest[j][i];
+                if(stateNumber == 1) {
                     inForest.burn(j, i);
                 }
             }
