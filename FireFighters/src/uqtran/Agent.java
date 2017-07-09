@@ -17,6 +17,7 @@ public class Agent {
     Agent( int priority, Vertex startVertex ) {
         this.priority = priority;
         this.current = startVertex;
+        terminated = false;
     }
 
     public void move( int direction ) {
@@ -27,7 +28,22 @@ public class Agent {
         current = nextVertex;
     }
 
+    public boolean shouldTerminate() {
+        Vertex[] fourNeighbor = current.getFourNeighbors();
+        for(int i = 0; i < fourNeighbor.length; i++) {
+            if(fourNeighbor[i] != null) {
+                if(fourNeighbor[i].getState() == BURNING) {
+                    return false;
+                }
+            }
+        }
+        return current.getState() != BURNING;
+    }
+
     public void sweep(boolean verbose) {
+        if(terminated) {
+            return;
+        }
         if(!VertexUtil.isCritical( current )) {
             current.extinguish();
             if(verbose) {
@@ -42,35 +58,44 @@ public class Agent {
             previous = UP;
         }
 
-        if( clockwise ) {
-            moveTo = previous.prev.prev;
+        moveTo = previous;
+
+        /*if( clockwise ) {
+            moveTo = previous.prev;
         } else {
-            moveTo = previous.next.next;
-        }
+            moveTo = previous.next;
+        }*/
 
         Vertex[] fourNeighbor = current.getFourNeighbors();
 
         for(int i = 0; i < 4; i++) {
-            if( clockwise ) {
+            if(clockwise) {
                 moveTo = moveTo.next;
             } else {
                 moveTo = moveTo.prev;
             }
 
             if(fourNeighbor[moveTo.getValue()] != null) {
-                if( fourNeighbor[ moveTo.getValue() ] != null ) {
-                    if( fourNeighbor[ moveTo.getValue() ].getState() == BURNING ) {
+                if(fourNeighbor[moveTo.getValue()] != null) {
+                    if(fourNeighbor[moveTo.getValue()].getState() == BURNING) {
                         previous = moveTo;
                         current = current.getFourNeighbors()[ moveTo.getValue() ];
                         break;
-                    } else if( fourNeighbor[ moveTo.next.next.getValue() ].getState() == BURNING && i == 0 ) {
-                        previous = moveTo.next.next;
-                        current = current.getFourNeighbors()[ moveTo.next.next.getValue() ];
-                        break;
+                    }
+                    if(fourNeighbor[moveTo.next.next.getValue()] != null) {
+                        if(fourNeighbor[moveTo.next.next.getValue()].getState() == BURNING && i == 0) {
+                            previous = moveTo.next.next;
+                            current = current.getFourNeighbors()[ moveTo.next.next.getValue() ];
+                            break;
+                        }
                     }
                 }
             }
 
+        }
+
+        if(shouldTerminate()) {
+            terminated = true;
         }
     }
 }

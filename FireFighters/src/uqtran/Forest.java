@@ -59,7 +59,7 @@ public class Forest {
             spreadFire();
             fireSpreadCounter = 0;
             if(verbose) {
-                System.out.println("<allBurning spreadFire 4-neighbor>");
+                System.out.println("allBurning spreadFire 4-neighbor");
             }
         } else {
             fireSpreadCounter++;
