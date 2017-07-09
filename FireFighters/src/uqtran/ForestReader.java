@@ -44,15 +44,15 @@ public class ForestReader {
         int agentStartY = 1;
         int sizeX = 5;
         int sizeY = 5;
-        int fireSpreadRate = 10;
+        int fireSpreadRate = 100;
 
         inForest = new Forest(sizeX, sizeY, fireSpreadRate);
-        int[][] testForest = {{0,0,0,0,0}, {0,1,1,1,0}, {0,1,1,0,0}, {0,1,1,0,0}, {0,0,0,0,0}};
+        int[][] testForest = {{0,0,0,0,0}, {0,1,1,1,0}, {0,1,1,1,0}, {0,1,1,1,0}, {0,0,0,0,0}};
         for(int i = 0; i < sizeY; i++) {
             for(int j = 0; j < sizeX; j++) {
-                int stateNumber = testForest[j][i];
+                int stateNumber = testForest[i][j];
                 if(stateNumber == 1) {
-                    inForest.burn(j, i);
+                    inForest.burn(i, j);
                 }
             }
         }

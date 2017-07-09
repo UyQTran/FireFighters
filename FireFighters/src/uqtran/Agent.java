@@ -14,15 +14,15 @@ public class Agent {
     Direction previous;
     boolean terminated;
 
-    Agent( int priority, Vertex startVertex ) {
+    Agent(int priority, Vertex startVertex) {
         this.priority = priority;
         this.current = startVertex;
         terminated = false;
     }
 
-    public void move( int direction ) {
-        Vertex nextVertex = current.getFourNeighbors()[ direction ];
-        if( nextVertex == null ) {
+    public void move(int direction) {
+        Vertex nextVertex = current.getFourNeighbors()[direction];
+        if(nextVertex == null) {
             return;
         }
         current = nextVertex;
@@ -44,7 +44,7 @@ public class Agent {
         if(terminated) {
             return;
         }
-        if(!VertexUtil.isCritical( current )) {
+        if(!VertexUtil.isCritical(current) && current.getState() == BURNING) {
             current.extinguish();
             if(verbose) {
                 String text = "agent" + priority + " extinguish " + current.getCoordinateText();
@@ -60,22 +60,33 @@ public class Agent {
 
         moveTo = previous;
 
-        /*if( clockwise ) {
-            moveTo = previous.prev;
+        /*if(clockwise) {
+            moveTo = previous.prev.prev;
         } else {
-            moveTo = previous.next;
+            moveTo = previous.next.next;
         }*/
 
         Vertex[] fourNeighbor = current.getFourNeighbors();
-
-        for(int i = 0; i < 4; i++) {
+        boolean foundEdge = false;
+        for(int i = 0; i < 8; i++) {
             if(clockwise) {
                 moveTo = moveTo.next;
             } else {
                 moveTo = moveTo.prev;
             }
+            Vertex vertexToCheck = fourNeighbor[moveTo.getValue()];
+            if(vertexToCheck != null) {
+                if(vertexToCheck.getState() != BURNING) {
+                    foundEdge = true;
+                }
+                if(vertexToCheck.getState() == BURNING && foundEdge) {
+                    previous = moveTo;
+                    current = vertexToCheck;
+                    break;
+                }
+            }
 
-            if(fourNeighbor[moveTo.getValue()] != null) {
+            /*if(fourNeighbor[moveTo.getValue()] != null) {
                 if(fourNeighbor[moveTo.getValue()] != null) {
                     if(fourNeighbor[moveTo.getValue()].getState() == BURNING) {
                         previous = moveTo;
@@ -85,12 +96,12 @@ public class Agent {
                     if(fourNeighbor[moveTo.next.next.getValue()] != null) {
                         if(fourNeighbor[moveTo.next.next.getValue()].getState() == BURNING && i == 0) {
                             previous = moveTo.next.next;
-                            current = current.getFourNeighbors()[ moveTo.next.next.getValue() ];
+                            current = current.getFourNeighbors()[moveTo.next.next.getValue()];
                             break;
                         }
                     }
                 }
-            }
+            }*/
 
         }
 

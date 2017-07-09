@@ -30,17 +30,27 @@ public class Forest {
         for(int i = 0; i < forestGrid.length; i++) {
             for(int j = 0; j < forestGrid[i].length; j++) {
                 if(i > 0) {
-                    forestGrid[i][j].getFourNeighbors()[LEFT.getValue()] = forestGrid[i-1][j];
+                    forestGrid[i][j].getFourNeighbors()[UP.getValue()] = forestGrid[i-1][j];
                 }
                 if(i < forestGrid.length-1) {
-                    forestGrid[i][j].getFourNeighbors()[RIGHT.getValue()] = forestGrid[i+1][j];
+                    forestGrid[i][j].getFourNeighbors()[DOWN.getValue()] = forestGrid[i+1][j];
                 }
                 if(j > 0) {
-                    forestGrid[i][j].getFourNeighbors()[UP.getValue()] = forestGrid[i][j-1];
+                    forestGrid[i][j].getFourNeighbors()[LEFT.getValue()] = forestGrid[i][j-1];
                 }
                 if(j < forestGrid[i].length-1) {
-                    forestGrid[i][j].getFourNeighbors()[DOWN.getValue()] = forestGrid[i][j+1];
+                    forestGrid[i][j].getFourNeighbors()[RIGHT.getValue()] = forestGrid[i][j+1];
                 }
+            }
+        }
+    }
+
+    public void traverse() {
+        for(int i = 0; i < forestGrid.length; i++) {
+            Vertex cursor = forestGrid[i][0];
+            for(int j = 0; j < forestGrid[i].length; j++) {
+                System.out.println(cursor.getCoordinateText());
+                cursor = cursor.getFourNeighbors()[RIGHT.getValue()];
             }
         }
     }
@@ -59,7 +69,7 @@ public class Forest {
             spreadFire();
             fireSpreadCounter = 0;
             if(verbose) {
-                System.out.println("allBurning spreadFire 4-neighbor");
+                //System.out.println("allBurning spreadFire 4-neighbor");
             }
         } else {
             fireSpreadCounter++;
@@ -67,15 +77,22 @@ public class Forest {
     }
 
     public boolean shouldBurn(int x, int y, int dir) {
-        State vertexState = forestGrid[x][y].getFourNeighbors()[dir].getState();
-        return vertexState != BURNING
-                && vertexState != DAMAGED;
+        Vertex vertex = forestGrid[y][x].getFourNeighbors()[dir];
+        if(vertex == null) {
+            return false;
+        }
+        State vertexState = vertex.getState();
+        return vertexState == STANDING;
     }
 
     public void burnVertex(int x, int y, int dir) {
-        forestGrid[x][y].getFourNeighbors()[dir].burn();
-        burningArea.add(forestGrid[x][y].getFourNeighbors()[dir]);
-        forestGrid[x][y].getFourNeighbors()[dir].preBurn = true;
+        Vertex vertex = forestGrid[x][y].getFourNeighbors()[dir];
+        if(vertex == null) {
+            return;
+        }
+        vertex.burn();
+        burningArea.add(vertex);
+        vertex.preBurn = true;
     }
 
     public void spreadFire() {
