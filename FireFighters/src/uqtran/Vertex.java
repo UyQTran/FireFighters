@@ -8,7 +8,12 @@ public class Vertex {
     private Vertex[] fourNeighbors;
     private State state;
     boolean preBurn;
-    int x,y;
+    final int x,y;
+
+    /*
+     * @invariant x >= 0 && y >= 0 &&
+     * fourNeighbors.length == 4
+     */
 
     Vertex(int x, int y, State state) {
         this.x = x;
@@ -19,7 +24,7 @@ public class Vertex {
     }
 
     public String getCoordinateText() {
-        return x + "," + y;
+        return "Z[" + x + "," + y + "]";
     }
 
     public void burn() {

@@ -13,9 +13,9 @@ public class DirectionHandler {
         ArrayList<Direction> directionList = new ArrayList<>( Arrays.asList( Direction.values() ) );
         int maxIndex = directionList.size()-1;
 
-        for( int i = 0; i < maxIndex+1; i++ ) {
+        for(int i = 0; i < maxIndex+1; i++ ) {
             Direction current = directionList.get( i );
-            if( i < maxIndex - 1 ) {
+            if(i < maxIndex) {
                 current.next = directionList.get( i + 1 );
             } else {
                 current.next = directionList.get( 0 );

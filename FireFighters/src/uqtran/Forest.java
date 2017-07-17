@@ -13,6 +13,13 @@ public class Forest {
     private final int fireSpreadRate;
     private int fireSpreadCounter;
 
+    /*
+     * @invariant fireSpreadCounter > 0 &&
+     * forestGrid != null &&
+     * fireSpreadCounter >= 0 &&
+     * fireSpreadCounter < fireSpreadRate
+     */
+
     Forest( int sizeX, int sizeY, int fireSpreadRate ) {
         forestGrid = new Vertex[sizeX][sizeY];
         this.fireSpreadRate = fireSpreadRate;
@@ -69,7 +76,7 @@ public class Forest {
             spreadFire();
             fireSpreadCounter = 0;
             if(verbose) {
-                //System.out.println("allBurning spreadFire 4-neighbor");
+                //System.out.println("\tallBurning spreadFire 4-neighbor");
             }
         } else {
             fireSpreadCounter++;

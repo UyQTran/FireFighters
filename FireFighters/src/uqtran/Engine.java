@@ -1,5 +1,7 @@
 package uqtran;
 
+import static uqtran.Direction.*;
+
 /**
  * Created by uqton on 04.07.2017.
  */
@@ -14,6 +16,11 @@ public class Engine {
 
     public void init() {
         DirectionHandler.init();
+        Direction d = UP;
+        for (int i = 0; i < 10; i++) {
+            System.out.println(d.getValue());
+            d = d.next;
+        }
     }
 
     public void sweep(boolean verbose) {
@@ -32,13 +39,17 @@ public class Engine {
         if(verbose) {
             System.out.println("Executing sweep...");
         }
+        int t = 0;
+        int maxT = 10;
 
         terminated: while(true) {
+            System.out.println("t = " + t);
             for(int i = 0; i < mainAgents.length; i++) {
                 if(!mainAgents[i].terminated) {
                     break;
                 }
                 if(i == mainAgents.length-1) {
+                    System.out.println("all agents terminated at t = " + t);
                     break terminated;
                 }
             }
@@ -47,6 +58,11 @@ public class Engine {
             for(int i = 0; i < mainAgents.length; i++) {
                 mainAgents[i].sweep(verbose);
             }
+            if(t >= maxT) {
+                System.out.println("terminated before task completion");
+                break terminated;
+            }
+            t++;
         }
     }
 }
