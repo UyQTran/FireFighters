@@ -9,6 +9,7 @@ public class Vertex {
     private State state;
     boolean preBurn;
     final int x,y;
+    int[] agentsVisiting;
 
     /*
      * @invariant x >= 0 && y >= 0 &&

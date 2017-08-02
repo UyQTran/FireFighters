@@ -12,6 +12,7 @@ public class Forest {
     private ArrayList<Vertex> burningArea;
     private final int fireSpreadRate;
     private int fireSpreadCounter;
+    boolean terminated;
 
     /*
      * @invariant fireSpreadCounter > 0 &&
@@ -24,6 +25,7 @@ public class Forest {
         forestGrid = new Vertex[sizeX][sizeY];
         this.fireSpreadRate = fireSpreadRate;
         burningArea = new ArrayList<>();
+        terminated = false;
         init();
     }
 
@@ -81,6 +83,14 @@ public class Forest {
         } else {
             fireSpreadCounter++;
         }
+    }
+
+    public boolean shouldTerminate() {
+        boolean isTerminating = burningArea.size() == 0;
+        if(isTerminating) {
+            terminated = true;
+        }
+        return terminated;
     }
 
     public boolean shouldBurn(int x, int y, int dir) {

@@ -49,7 +49,6 @@ public class Engine {
                     break;
                 }
                 if(i == mainAgents.length-1) {
-                    System.out.println("all agents terminated at t = " + t);
                     break terminated;
                 }
             }
@@ -63,6 +62,9 @@ public class Engine {
                 break terminated;
             }
             t++;
+        }
+        if(mainForest.shouldTerminate()) {
+            System.out.println("F = empty");
         }
     }
 }
