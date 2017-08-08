@@ -37,7 +37,7 @@ public class Forest {
         for(int i = 0; i < graph.size(); i++) {
             for(int j = i; j < graph.size(); j++) {
                 if(!isConnected(graph.get(i), graph.get(j))) {
-                    return false
+                    return false;
                 }
             }
         }
