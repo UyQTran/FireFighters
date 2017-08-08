@@ -18,7 +18,8 @@ public class Forest {
      * @invariant fireSpreadCounter > 0 &&
      * forestGrid != null &&
      * fireSpreadCounter >= 0 &&
-     * fireSpreadCounter < fireSpreadRate
+     * fireSpreadCounter < fireSpreadRate &&
+     * isSingleConnected(burningArea)
      */
 
     Forest( int sizeX, int sizeY, int fireSpreadRate ) {
@@ -27,6 +28,37 @@ public class Forest {
         burningArea = new ArrayList<>();
         terminated = false;
         init();
+    }
+
+    public boolean isSingleConnected(ArrayList<Vertex> graph) {
+        if(graph.size() == 0) {
+            return true;
+        }
+        for(int i = 0; i < graph.size(); i++) {
+            for(int j = i; j < graph.size(); j++) {
+                if(!isConnected(graph.get(i), graph.get(j))) {
+                    return false
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isConnected(Vertex v1, Vertex v2) {
+        if(v1.x == v2.x && v1.y == v2.y) {
+            return true;
+        }
+
+        Vertex[] fourNeighbors = v1.getFourNeighbors();
+
+        for(int i = 0; i < fourNeighbors.length; i++) {
+            if(fourNeighbors[i].getState() == BURNING) {
+                if(isConnected(fourNeighbors[i], v2)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void init() {
