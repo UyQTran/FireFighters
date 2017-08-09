@@ -70,7 +70,7 @@ public class Agent {
     }
 
     void handleJunction() {
-        int[] burningFourNeighbors = getBurningList(current.getFourNeighbors();
+        int[] burningFourNeighbors = getBurningList(current.getFourNeighbors());
         int goToDirection = calculateDirection(priority, burningFourNeighbors);
         current = current.getFourNeighbors()[goToDirection];
     }
