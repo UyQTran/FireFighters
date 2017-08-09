@@ -17,10 +17,6 @@ public class Engine {
     public void init() {
         DirectionHandler.init();
         Direction d = UP;
-        for (int i = 0; i < 10; i++) {
-            System.out.println(d.getValue());
-            d = d.next;
-        }
     }
 
     public void sweep(boolean verbose) {
