@@ -16,7 +16,6 @@ public class Engine {
 
     public void init() {
         DirectionHandler.init();
-        Direction d = UP;
     }
 
     public void sweep(boolean verbose) {
